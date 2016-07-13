@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,12 @@ using System.Threading.Tasks;
 namespace CursoConsoleApplication
 {
     class Program
+
     {
         static void Main(string[] args)
         {
+            List<string> ListCli = new List<string>();
+            ArrayList ListPrd = new ArrayList();
             String cliente = "", produto = "";
             int opcao, operacao;
             do
@@ -24,10 +28,14 @@ namespace CursoConsoleApplication
                     case 1:
                         Console.WriteLine("1- Cadastrar Cliente");
                         Console.WriteLine("2- Consultar Cliente");
+                        Console.WriteLine("3- Consultar Por Nome");
+                        Console.WriteLine("4- Deletar Por nome");
                         break;
                     case 2:
                         Console.WriteLine("1- Cadastrar Produto");
                         Console.WriteLine("2- Consultar Produto");
+                        Console.WriteLine("3- Consultar Por Nome");
+                        Console.WriteLine("4- Deletar Por nome");
                         break;
                     case 3:
                         Console.WriteLine("Saindo...");
@@ -36,39 +44,92 @@ namespace CursoConsoleApplication
                         Console.WriteLine("Operação Inválida!");
                         break;
                 }
+
+                //cliente
                 if ((opcao.Equals(1)))
                 {
                     operacao = Convert.ToInt32(Console.ReadLine());
+                    //cadastra
                     if (operacao.Equals(1))
                     {
                         Console.Write("Informe o nome:");
                         cliente = Console.ReadLine();
+                        ListCli.Add(cliente);
                         Console.WriteLine("Cliente cadastrado com sucesso!");
+                        Console.ReadKey();
                     }
                     else if ((operacao.Equals(2)))
                     {
-                        Console.WriteLine("Nome do Cliente: " + cliente);
+                        if (ListCli.Count == 0)
+                            Console.WriteLine("Lista Vazia");
+                        foreach (var item in ListCli)
+                        {
+                            Console.WriteLine("Nome do Cliente: " + item);
+                            
+                        }
+
                         Console.ReadKey();
                     }
+                    else if (operacao.Equals(3)) { 
+                        Console.WriteLine("Informe nome da pesquisa: "); 
+                        String nomeAux = Console.ReadLine();
+                        
+                        foreach (var item in ListCli) { 
+                            if (item.Equals(nomeAux)) 
+                                Console.WriteLine("Achei {0}!", item); 
+                        } 
+                        Console.ReadKey(); 
+                    }
+
+                    else if (operacao.Equals(4)) { 
+                        Console.WriteLine("Informe nome da remoção: ");
+                        String nomeAux = Console.ReadLine();
+                        bool removeu = ListCli.Remove(nomeAux);
+                        if (removeu) Console.WriteLine("Cliente removido com sucesso!");
+                        Console.ReadKey(); }
                     else
                     {
                         Console.WriteLine("Opção Inválida!");
                     }
                 }
-                else if ((opcao.Equals(2)))
+                else if ((opcao.Equals(2)))//produto
                 {
                     operacao = Convert.ToInt32(Console.ReadLine());
-                    if (operacao.Equals(1))
+                    if (operacao.Equals(1))//cadastrar
                     {
                         Console.Write("Informe  o nome:");
                         produto = Console.ReadLine();
+                        ListPrd.Add(produto);
                         Console.WriteLine("Cliente cadastrado com sucesso!");
-                    }
-                    else if ((operacao.Equals(2)))
-                    {
-                        Console.Write("Descrição: " + produto);
                         Console.ReadKey();
                     }
+                    else if ((operacao.Equals(2)))//consultar
+                    {
+                        foreach (var item in ListPrd)
+                        {
+                            Console.Write("Descrição: " + item);
+                        }
+                       
+                        Console.ReadKey();
+                    }
+                    else if (operacao.Equals(3)) { 
+                        String descAux = Console.ReadLine(); 
+                        foreach (var item in ListPrd) { 
+                            if (item.Equals(descAux)) 
+                                Console.WriteLine("Achei {0}!", item); 
+                        } 
+                        Console.ReadKey(); 
+                    }
+
+                    else if (operacao.Equals(4)) {
+                        Console.WriteLine("Informe nome da remoção: ");
+                        String descAux = Console.ReadLine(); 
+                        foreach (var item in ListPrd) {
+                            if (item.Equals(descAux)) {
+                                ListPrd.Remove(item);
+                                Console.WriteLine("Produto removido com sucesso!"); 
+                                break; } }
+                            Console.ReadKey(); }
                     else
                     {
                         Console.WriteLine("Opção Inválida!");
